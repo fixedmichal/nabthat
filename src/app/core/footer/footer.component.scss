@@ -1,0 +1,30 @@
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem;
+  background-color: #15161a;
+
+  &__logo {
+    height: 5.75rem;
+    width: 5.75rem;
+    font-size: 1.3rem;
+    overflow: visible;
+    word-break: keep-all;
+    text-transform: uppercase;
+    border: 1px solid #303030;
+
+    &__text {
+      color: #282b32;
+    }
+  }
+
+  &__button {
+    font-size: 1.1rem;
+    display: inline-block;
+    color: #989baa;
+    background-color: inherit;
+    border: 1px solid #282b32;
+    padding: 0.7rem 6.5rem;
+  }
+}

@@ -1,0 +1,32 @@
+.app {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+
+  &__main {
+    margin: 3rem 2rem;
+
+    &__header {
+      margin-bottom: 2rem;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    &__blocks {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1rem;
+      margin-top: 5rem;
+
+      & > * {
+        display: flex;
+        justify-content: center;
+        border: 1px solid red;
+      }
+
+      &__third-block {
+        margin: 0 auto;
+      }
+    }
+  }
+}

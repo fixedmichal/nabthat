@@ -1,0 +1,34 @@
+.header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0b0c10;
+  padding: 1rem;
+
+  &__description {
+    color: #fff;
+    font-size: 1.25rem;
+  }
+
+  &__logo {
+    background-color: #303030;
+    text-align: center;
+    padding: 1rem;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 75%;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+
+    &__icon {
+      color: #fff;
+      font-size: 3rem;
+    }
+
+    &:hover {
+      background-color: #e88301;
+    }
+  }
+}

@@ -1,12 +1,17 @@
-<!-- <router-outlet /> -->
 <div class="app">
-  <app-header />
+  <app-header class="app__header" />
   <main class="app__main">
     <h1 class="app__main__header">Nagłówek H1</h1>
     <div class="app__main__blocks">
       <app-first-block />
       <app-second-block />
-      <app-third-block class="app__main__blocks__third-block" />
+      <app-third-block class="app__main__blocks__third-block">
+        @if(projectedContentTexts$ | async; as projectedContentTexts) {
+        @for(text of projectedContentTexts; track text) {
+        <div [innerHTML]="text"></div>
+
+        } }
+      </app-third-block>
     </div>
   </main>
   <app-footer />

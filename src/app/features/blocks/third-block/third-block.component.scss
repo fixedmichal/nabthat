@@ -1,8 +1,10 @@
 .third-block {
+  // display: none;
+
   &__description {
     padding: 0 0.2rem;
     color: #989baa;
     font-size: 0.9rem;
-    text-align: center;
+    text-align: center; 
   }
 }

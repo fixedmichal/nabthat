@@ -1,12 +1,14 @@
 .app {
-  height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr auto;
 
-  &__main {
-    margin: 3rem 2rem;
+  // &__header {
 
+  // }
+
+  &__main {
     &__header {
+      margin-top: 8rem;
       margin-bottom: 2rem;
       text-align: center;
       font-weight: 500;
@@ -14,7 +16,7 @@
 
     &__blocks {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(375px, 1fr));
       gap: 1rem;
       margin-top: 5rem;
 
@@ -26,7 +28,37 @@
 
       &__third-block {
         margin: 0 auto;
+        padding: 0 0.2rem;
+        color: #989baa;
+        font-size: 0.9rem;
+        text-align: center;
       }
     }
   }
+
+  @media (min-width: 375px) and (max-width: 600px) {
+    .app__main__blocks__third-block {
+      min-height: 80vh;
+    }
+  }
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
 }

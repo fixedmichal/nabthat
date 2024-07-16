@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { BlocksService } from '../services/blocks.service';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [],
+  imports: [AsyncPipe],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-  protected isAuthorNameDisplayed = false;
+  private readonly blocksService = inject(BlocksService);
+  protected isAuthorNameDisplayed$ = this.blocksService.isAuthorNameDisplayed$;
 }

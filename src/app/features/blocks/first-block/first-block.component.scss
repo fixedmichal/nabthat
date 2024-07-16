@@ -35,7 +35,16 @@
         &:checked::before {
           transform: scale(1);
         }
+
+        &:focus {
+          outline: max(3px, 0.15rem) solid currentColor;
+          outline-offset: max(3px, 0.15rem);
+        }
       }
     }
   }
 }
+
+// .first-block__radio-buttons__label__radio-button:focus {
+//   outline: 2px solid #000; /* or any visible color */
+// }

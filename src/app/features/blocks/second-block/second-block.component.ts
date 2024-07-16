@@ -1,12 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { BlocksService } from '../../../core/services/blocks.service';
 
 @Component({
   selector: 'app-second-block',
   standalone: true,
   imports: [],
   templateUrl: './second-block.component.html',
-  styleUrl: './second-block.component.scss'
+  styleUrl: './second-block.component.scss',
 })
 export class SecondBlockComponent {
+  private readonly service = inject(BlocksService);
 
+  onAppendButtonClick(): void {
+    this.service.emitPasteButtonClicked();
+  }
+
+  onReplaceButtonClick(): void {
+    this.service.emitReplaceButtonClicked();
+  }
 }

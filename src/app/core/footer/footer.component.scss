@@ -1,21 +1,47 @@
 .footer {
+  position: fixed;
+  bottom: 0;
   display: flex;
+  width: 100%;
   align-items: center;
   justify-content: space-between;
-  padding: 2rem;
+  padding: 1rem 0.5rem;
   background-color: #15161a;
+  overflow: hidden;
 
   &__logo {
     height: 5.75rem;
     width: 5.75rem;
     font-size: 1.3rem;
-    overflow: visible;
-    word-break: keep-all;
     text-transform: uppercase;
     border: 1px solid #303030;
 
     &__text {
       color: #282b32;
+    }
+  }
+
+  &__menu {
+    // display: none;
+    position: absolute;
+    z-index: 999999;
+    bottom: 90%; /* Hide menu by default */
+    left: 50%;
+    width: 10rem;
+    background: #444;
+    color: #fff;
+    text-align: center;
+    transition: bottom 0.5s ease;
+
+    &__list {
+      list-style: none;
+      margin: 0;
+      padding: 10px 0;
+
+      &__item {
+        &__button {
+        }
+      }
     }
   }
 
@@ -25,6 +51,11 @@
     color: #989baa;
     background-color: inherit;
     border: 1px solid #282b32;
-    padding: 0.7rem 6.5rem;
+    padding: 0.7rem 4rem;
+
+    &:hover + .footer__menu {
+      // bottom: 500px;
+      display: block;
+    }
   }
 }

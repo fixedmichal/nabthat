@@ -5,7 +5,7 @@
 
   <div class="header__description">
     <p class="header__description__content">Zadanie <b>rekrutacyjne</b></p>
-    @if(isAuthorNameDisplayed) {
+    @if(isAuthorNameDisplayed$ | async; as isAuthorNameDisplayed) {
     <p class="header__description__content">Michał Stuleblak</p>
     }
   </div>

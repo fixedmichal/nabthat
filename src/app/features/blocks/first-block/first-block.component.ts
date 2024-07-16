@@ -2,8 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { tap } from 'rxjs';
 import { Option } from '../../../models/option.type';
-import { BlocksService } from '../../../core/services/some.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { BlocksService } from '../../../core/services/blocks.service';
 @Component({
   selector: 'app-first-block',
   standalone: true,
@@ -33,18 +32,18 @@ export class FirstBlockComponent implements OnInit {
     {
       id: 'thirdOptionRadioButton',
       value: 'thirdOption',
-      text: 'Opcja trzecia',
+      text: 'Opcja losowa',
     },
   ];
 
   constructor() {
-    this.someService
-      .stream$()
-      .pipe(
-        tap((data) => console.log('stream: ', data)),
-        takeUntilDestroyed()
-      )
-      .subscribe();
+    // this.someService
+    //   .stream$()
+    //   .pipe(
+    //     tap((data) => console.log('stream: ', data)),
+    //     takeUntilDestroyed()
+    //   )
+    //   .subscribe();
   }
 
   ngOnInit(): void {

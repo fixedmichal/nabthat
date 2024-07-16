@@ -1,7 +1,17 @@
 <section class="second-block">
   <h3 class="uppercase-header">blok drugi</h3>
   <div class="second-block__buttons">
-    <button class="button second-block__buttons__button">zastąp</button>
-    <button class="button second-block__buttons__button">doklej</button>
+    <button
+      class="button second-block__buttons__button"
+      (click)="onReplaceButtonClick()"
+    >
+      zastąp
+    </button>
+    <button
+      class="button second-block__buttons__button"
+      (click)="onAppendButtonClick()"
+    >
+      doklej
+    </button>
   </div>
 </section>

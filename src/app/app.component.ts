@@ -1,16 +1,18 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
 import { HeaderComponent } from './core/header/header.component';
 import { FooterComponent } from './core/footer/footer.component';
 import { FirstBlockComponent } from './features/blocks/first-block/first-block.component';
 import { SecondBlockComponent } from './features/blocks/second-block/second-block.component';
 import { ThirdBlockComponent } from './features/blocks/third-block/third-block.component';
+import { BlocksService } from './core/services/blocks.service';
+import { AsyncPipe } from '@angular/common';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    RouterOutlet,
+    AsyncPipe,
     HeaderComponent,
     FooterComponent,
     FirstBlockComponent,
@@ -21,5 +23,8 @@ import { ThirdBlockComponent } from './features/blocks/third-block/third-block.c
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'nabthat';
+  // private readonly service = inject(BlocksService);
+  constructor(private service: BlocksService) {}
+
+  projectedContentTexts$ = this.service.outputText$;
 }

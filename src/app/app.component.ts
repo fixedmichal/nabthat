@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { HeaderComponent } from './core/header/header.component';
 import { FooterComponent } from './core/footer/footer.component';
 import { FirstBlockComponent } from './features/blocks/first-block/first-block.component';
@@ -6,7 +6,6 @@ import { SecondBlockComponent } from './features/blocks/second-block/second-bloc
 import { ThirdBlockComponent } from './features/blocks/third-block/third-block.component';
 import { BlocksService } from './core/services/blocks.service';
 import { AsyncPipe } from '@angular/common';
-import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -21,10 +20,10 @@ import { tap } from 'rxjs';
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-  // private readonly service = inject(BlocksService);
   constructor(private service: BlocksService) {}
 
-  projectedContentTexts$ = this.service.outputText$;
+  projectedContentTexts$ = this.service.outputTexts$;
 }

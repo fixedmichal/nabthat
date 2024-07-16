@@ -1,4 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { tap } from 'rxjs';
 import { Option } from '../../../models/option.type';
@@ -9,6 +14,7 @@ import { BlocksService } from '../../../core/services/blocks.service';
   imports: [ReactiveFormsModule, FormsModule],
   templateUrl: './first-block.component.html',
   styleUrl: './first-block.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FirstBlockComponent implements OnInit {
   private readonly someService = inject(BlocksService);

@@ -4,12 +4,14 @@
     <button
       class="button second-block__buttons__button"
       (click)="onReplaceButtonClick()"
+      (keydown.enter)="onReplaceButtonClick()"
     >
       zastąp
     </button>
     <button
       class="button second-block__buttons__button"
       (click)="onAppendButtonClick()"
+      (keydown.enter)="onAppendButtonClick()"
     >
       doklej
     </button>

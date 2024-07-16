@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { BlocksService } from '../../../core/services/blocks.service';
 
 @Component({
@@ -7,6 +7,7 @@ import { BlocksService } from '../../../core/services/blocks.service';
   imports: [],
   templateUrl: './second-block.component.html',
   styleUrl: './second-block.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SecondBlockComponent {
   private readonly service = inject(BlocksService);

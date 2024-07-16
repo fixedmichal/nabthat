@@ -27,7 +27,7 @@ export class BlocksService {
   private replaceButtonClicked$$ = new Subject<void>();
   private pasteButtonClicked$$ = new Subject<void>();
 
-  private isAuthorNameDisplayed$$ = new BehaviorSubject<boolean>(false);
+  private isPersonalDataDisplayed$$ = new BehaviorSubject<boolean>(false);
   private outputText$$ = new BehaviorSubject<string[]>([loremIpsumText]);
 
   constructor(private http: HttpClient) {
@@ -56,11 +56,11 @@ export class BlocksService {
     return this.pasteButtonClicked$$.asObservable();
   }
 
-  get isAuthorNameDisplayed$() {
-    return this.isAuthorNameDisplayed$$.asObservable();
+  get isPersonalDataDisplayed$() {
+    return this.isPersonalDataDisplayed$$.asObservable();
   }
 
-  get outputText$() {
+  get outputTexts$() {
     return this.outputText$$.asObservable();
   }
 
@@ -77,6 +77,15 @@ export class BlocksService {
   }
 
   setOutputTextDefaultValue(): void {
+    this.outputText$$.next([loremIpsumText]);
+  }
+
+  setIsAuthorNameDisplayedTrue(): void {
+    this.isPersonalDataDisplayed$$.next(true);
+  }
+
+  resetSettingsToDefault(): void {
+    this.isPersonalDataDisplayed$$.next(false);
     this.outputText$$.next([loremIpsumText]);
   }
 

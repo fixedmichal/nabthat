@@ -1,6 +1,10 @@
 <section class="first-block">
   <h3 class="uppercase-header">blok pierwszy</h3>
-  <fieldset class="first-block__radio-buttons" role="radiogroup">
+  <fieldset
+    class="first-block__radio-buttons"
+    role="radiogroup"
+    aria-labelledby="first-block-label"
+  >
     @for(radioButton of radioButtons; track radioButton.id) {
     <label class="first-block__radio-buttons__label" [for]="radioButton.id">
       <input

@@ -9,7 +9,6 @@
         @if(projectedContentTexts$ | async; as projectedContentTexts) {
         @for(text of projectedContentTexts; track text) {
         <div [innerHTML]="text"></div>
-
         } }
       </app-third-block>
     </div>

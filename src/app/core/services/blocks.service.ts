@@ -35,6 +35,8 @@ export class BlocksService {
 
   private resetRadioButtons$$ = new Subject<void>();
 
+  private lastUsedTextIndexForReplacement: number | undefined;
+
   constructor(private http: HttpClient) {
     this.getStringsFromJsonFile().pipe(takeUntilDestroyed()).subscribe();
     this.setupAppendTextStream$().pipe(takeUntilDestroyed()).subscribe();
@@ -157,19 +159,19 @@ export class BlocksService {
 
         break;
       case 'thirdOption':
-        let isThereNoMoreNotDisplayedValues: boolean;
+        let areThereNoMoreNotDisplayedValues: boolean;
 
-        isThereNoMoreNotDisplayedValues = !textRecordsFromJson
+        areThereNoMoreNotDisplayedValues = !textRecordsFromJson
           .slice(2, 6)
           .find((textRecord) => textRecord.isDisplayed === false);
 
         console.log('sliced Array:', textRecordsFromJson.slice(2, 6));
         console.log(
           'isThereNoMoreNotDisplayedValues: ',
-          isThereNoMoreNotDisplayedValues
+          areThereNoMoreNotDisplayedValues
         );
 
-        if (isThereNoMoreNotDisplayedValues) {
+        if (areThereNoMoreNotDisplayedValues) {
           break;
         }
 
@@ -232,10 +234,13 @@ export class BlocksService {
 
         do {
           const randomIndex = this.generateRandomIndexFromRange();
-          replacementText = this.getTextForReplacementFromJsonAndSetFlags(
-            textRecordsFromJson,
-            randomIndex
-          );
+
+          if (randomIndex !== this.lastUsedTextIndexForReplacement) {
+            replacementText = this.getTextForReplacementFromJsonAndSetFlags(
+              textRecordsFromJson,
+              randomIndex
+            );
+          }
           console.log('replacementText', replacementText);
         } while (!replacementText);
         break;
@@ -243,6 +248,10 @@ export class BlocksService {
       default:
         throw Error('invalid option');
     }
+
+    this.lastUsedTextIndexForReplacement = textRecordsFromJson.findIndex(
+      (textRecord) => textRecord.value === replacementText
+    );
 
     replacementText
       ? this.outputText$$.next([replacementText])

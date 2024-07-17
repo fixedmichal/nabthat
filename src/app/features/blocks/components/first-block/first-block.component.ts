@@ -5,7 +5,12 @@ import {
   inject,
   OnInit,
 } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { tap } from 'rxjs';
 import { Option } from '../../../../models/option.type';
 import { BlocksService } from '../../../../core/services/blocks.service';
@@ -23,9 +28,11 @@ export class FirstBlockComponent implements OnInit {
   private readonly blocksService = inject(BlocksService);
   private readonly destroyRef = inject(DestroyRef);
 
-  protected options = new FormControl<Option>({
-    value: null,
-    disabled: false,
+  protected optionsForm = new FormGroup({
+    options: new FormControl<Option>({
+      value: null,
+      disabled: false,
+    }),
   });
 
   protected radioButtonsConfig = [
@@ -47,16 +54,20 @@ export class FirstBlockComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.options.valueChanges
+    this.optionsForm.valueChanges
       .pipe(
-        tap((option) => this.blocksService.emitOptionSelected(option)),
+        tap((value) => {
+          if (value.options) {
+            this.blocksService.emitOptionSelected(value.options);
+          }
+        }),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
 
     this.blocksService.resetRadioButtons$
       .pipe(
-        tap(() => this.options.reset()),
+        tap(() => this.optionsForm.reset()),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();

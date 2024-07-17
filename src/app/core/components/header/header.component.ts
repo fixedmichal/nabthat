@@ -12,6 +12,7 @@ import { RouterLink } from '@angular/router';
 })
 export class HeaderComponent {
   private readonly blocksService = inject(BlocksService);
+
   protected isPersonalDataDisplayed$ =
     this.blocksService.isPersonalDataDisplayed$;
 }

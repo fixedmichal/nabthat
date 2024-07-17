@@ -17,7 +17,17 @@
     padding-left: 0.4rem;
     text-transform: uppercase;
     border: 1px solid #303030;
-    color: #fff;
+    color: #2a2d36;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      color: #fff;
+      border-color: #e88201;
+    }
+
+    &__is-word {
+      color: #2a2d36;
+    }
   }
 
   &__company-name {
@@ -75,6 +85,7 @@
         border-color: #fff;
       }
 
+      // to delete
       &:hover + .footer__navigation__menu {
         display: block;
       }
@@ -85,16 +96,15 @@
     }
 
     &__menu {
-      display: none;
       position: absolute;
-      top: -6.6rem;
+      top: 0;
       left: 0;
-      z-index: 999999;
+      z-index: -1;
       width: 100%;
       background: #ffffff;
       color: #15161a;
       text-align: center;
-      transition: bottom 0.5s ease;
+      transition: top 0.5s ease;
 
       &__list {
         list-style: none;
@@ -141,6 +151,11 @@
       }
     }
   }
+}
+
+.menu-displayed {
+  top: -6.6rem;
+  z-index: 999999;
 }
 
 @media (max-width: 700px) {

@@ -5,6 +5,7 @@
 
   &__main {
     &__header {
+      font-size: 2.5rem;
       margin-top: 8rem;
       text-align: center;
       font-weight: 500;
@@ -12,7 +13,7 @@
 
     &__blocks {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(375px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 1rem;
       margin-top: 4rem;
 
@@ -33,7 +34,7 @@
   }
 }
 
-@media (min-width: 766px) and (max-width: 1000px) {
+@media (min-width: 648px) and (max-width: 1400px) {
   .app__main__blocks__third-block {
     grid-column: span 2;
   }
@@ -46,6 +47,23 @@
     }
   }
 }
+
+@media (min-width: 800px) {
+  .app {
+    &__main {
+      padding: 1rem 2rem;
+    }
+  }
+}
+
+@media (min-width: 1200px) {
+  .app {
+    &__main {
+      padding: 1rem 3rem;
+    }
+  }
+}
+
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
 }

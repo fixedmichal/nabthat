@@ -1,6 +1,6 @@
 .second-block {
   margin-bottom: 1rem;
-
+  text-align: center;
   &__buttons {
     display: flex;
     flex-direction: column;
@@ -27,5 +27,11 @@
         );
       }
     }
+  }
+}
+
+@media (min-width: 1410px) {
+  .second-block__buttons {
+    flex-direction: row;
   }
 }

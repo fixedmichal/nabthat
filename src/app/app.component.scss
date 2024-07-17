@@ -32,7 +32,22 @@
       }
     }
   }
-}
+
+    .dialog {
+      border: none;
+      background-color: #e88301;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+
+      &__button {
+        padding: 1rem;
+      }
+    }
+
+  }
+
 
 @media (min-width: 648px) and (max-width: 1400px) {
   .app__main__blocks__third-block {

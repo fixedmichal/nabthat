@@ -16,6 +16,7 @@ import { HttpClient } from '@angular/common/http';
 import { loremIpsumText } from '../constants/lorem-ipsum-text.constants';
 import { TextRecord } from '../../models/text-record.type';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { sortingMethod } from '../utils/utils';
 
 @Injectable({ providedIn: 'root' })
 export class BlocksService {
@@ -36,6 +37,7 @@ export class BlocksService {
   private resetRadioButtons$$ = new Subject<void>();
 
   private lastUsedTextIndexForReplacement: number | undefined;
+  private htmlDialogElement: HTMLDialogElement | undefined;
 
   constructor(private http: HttpClient) {
     this.getStringsFromJsonFile().pipe(takeUntilDestroyed()).subscribe();
@@ -102,6 +104,10 @@ export class BlocksService {
     this.resetRadioButtons$$.next();
   }
 
+  forwardDialogReference(dialog: HTMLDialogElement): void {
+    this.htmlDialogElement = dialog;
+  }
+
   private setupAppendTextStream$() {
     return this.appendButtonClicked$.pipe(
       switchMap(() =>
@@ -165,25 +171,17 @@ export class BlocksService {
           .slice(2, 6)
           .find((textRecord) => textRecord.isDisplayed === false);
 
-        console.log('sliced Array:', textRecordsFromJson.slice(2, 6));
-        console.log(
-          'isThereNoMoreNotDisplayedValues: ',
-          areThereNoMoreNotDisplayedValues
-        );
-
         if (areThereNoMoreNotDisplayedValues) {
           break;
         }
 
         while (!textToAppend) {
           const randomIndex = this.generateRandomIndexFromRange();
-          console.log(randomIndex);
 
           textToAppend = this.getTextFromJsonToAppendAndSetItsFlag(
             textRecordsFromJson,
             randomIndex
           );
-          console.log('"textToAppend" in WHILE LOOP', textToAppend);
         }
         break;
 
@@ -192,14 +190,14 @@ export class BlocksService {
     }
 
     if (textToAppend === null) {
-      // TODO: DIALOG HERE!
+      this.htmlDialogElement?.showModal();
     }
 
     textToAppend
       ? this.outputText$$.next(
-          this.outputText$$.value.concat(textToAppend).sort()
+          this.outputText$$.value.concat(textToAppend).sort(sortingMethod)
         )
-      : this.outputText$$.next(this.outputText$$.value.sort());
+      : this.outputText$$.next(this.outputText$$.value.sort(sortingMethod));
   }
 
   private generateReplacementText(
@@ -241,7 +239,6 @@ export class BlocksService {
               randomIndex
             );
           }
-          console.log('replacementText', replacementText);
         } while (!replacementText);
         break;
 

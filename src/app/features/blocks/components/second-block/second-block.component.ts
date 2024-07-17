@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { BlocksService } from '../../../core/services/blocks.service';
+import { BlocksService } from '../../../../core/services/blocks.service';
 
 @Component({
   selector: 'app-second-block',

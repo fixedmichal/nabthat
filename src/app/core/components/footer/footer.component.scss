@@ -1,24 +1,50 @@
 .footer {
-  // position: fixed;
-  // bottom: 0;
-  position: absolute;
+  position: relative;
   bottom: 0;
+
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 0.5rem;
+  margin-top: 4rem;
+  padding: 1rem 1rem;
   background-color: #15161a;
 
   &__logo {
-    height: 5.75rem;
-    width: 5.75rem;
-    font-size: 1.3rem;
+    height: 5.6rem;
+    width: 5.6rem;
+    font-size: 1.25rem;
+    padding-left: 0.4rem;
     text-transform: uppercase;
     border: 1px solid #303030;
+    color: #fff;
+  }
 
-    &__text {
-      color: #282b32;
+  &__company-name {
+    color: #2a2d36;
+    position: relative;
+    font-size: 1.1rem;
+
+    &::before {
+      content: "";
+      position: absolute;
+      display: inline-block;
+      border-top: 0.5px solid #2a2d36;
+      width: 2.5rem;
+      transform: translateY(-0.25rem);
+      top: 65%;
+      left: -65%;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      display: inline-block;
+      border-top: 0.5px solid #2a2d36;
+      width: 2.5rem;
+      transform: translateY(-0.25rem);
+      top: 65%;
+      left: 104%;
     }
   }
 
@@ -32,7 +58,7 @@
       color: #989baa;
       background-color: inherit;
       border: 1px solid #282b32;
-      padding: 0.7rem 4rem;
+      padding: 0.7rem 3.5rem;
 
       &__icon {
         margin-left: 0.7rem;
@@ -82,6 +108,7 @@
             align-items: center;
             gap: 0.3rem;
             cursor: pointer;
+            text-decoration: none;
 
             &__icon {
               font-size: 0.8rem;
@@ -100,12 +127,19 @@
               outline-offset: max(3px, 0.15rem);
             }
 
-            &:hover {
-              color: #101012;
+            &:hover > p,
+            &:hover > i {
+              color: #e88201;
             }
           }
         }
       }
     }
+  }
+}
+
+@media (max-width: 600px) {
+  .footer__company-name {
+    display: none;
   }
 }

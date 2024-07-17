@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { HeaderComponent } from './core/header/header.component';
-import { FooterComponent } from './core/footer/footer.component';
-import { FirstBlockComponent } from './features/blocks/first-block/first-block.component';
-import { SecondBlockComponent } from './features/blocks/second-block/second-block.component';
-import { ThirdBlockComponent } from './features/blocks/third-block/third-block.component';
+import { HeaderComponent } from './core/components/header/header.component';
+import { FooterComponent } from './core/components/footer/footer.component';
+import { FirstBlockComponent } from './features/blocks/components/first-block/first-block.component';
+import { SecondBlockComponent } from './features/blocks/components/second-block/second-block.component';
+import { ThirdBlockComponent } from './features/blocks/components/third-block/third-block.component';
 import { BlocksService } from './core/services/blocks.service';
 import { AsyncPipe } from '@angular/common';
 

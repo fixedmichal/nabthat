@@ -5,23 +5,26 @@ import {
   first,
   forkJoin,
   map,
-  mergeMap,
   Observable,
   ReplaySubject,
   Subject,
+  switchMap,
   tap,
 } from 'rxjs';
 import { Option } from '../../models/option.type';
 import { HttpClient } from '@angular/common/http';
 import { loremIpsumText } from '../constants/lorem-ipsum-text.constants';
 import { TextRecord } from '../../models/text-record.type';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({ providedIn: 'root' })
 export class BlocksService {
   private readonly MINIMAL_INDEX = 2;
   private readonly MAXIMAL_INDEX = 5;
 
-  private textRecordsFromJson$ = new ReplaySubject<TextRecord[]>(1);
+  private textRecordsFromJson$$ = new BehaviorSubject<TextRecord[] | null>(
+    null
+  );
 
   private optionSelected$$ = new ReplaySubject<Option>(1);
   private replaceButtonClicked$$ = new Subject<void>();
@@ -30,16 +33,12 @@ export class BlocksService {
   private isPersonalDataDisplayed$$ = new BehaviorSubject<boolean>(false);
   private outputText$$ = new BehaviorSubject<string[]>([loremIpsumText]);
 
+  private resetRadioButtons$$ = new Subject<void>();
+
   constructor(private http: HttpClient) {
-    this.getStringsFromJsonFile().subscribe();
-
-    this.setupAppendTextStream$()
-      .pipe(tap((text) => console.log('appendedTEXT:', text)))
-      .subscribe();
-
-    this.setupReplaceTextStream$()
-      .pipe(tap((text) => console.log('replacemenetTEXT:', text)))
-      .subscribe();
+    this.getStringsFromJsonFile().pipe(takeUntilDestroyed()).subscribe();
+    this.setupAppendTextStream$().pipe(takeUntilDestroyed()).subscribe();
+    this.setupReplaceTextStream$().pipe(takeUntilDestroyed()).subscribe();
   }
 
   get optionSelected$(): Observable<Option> {
@@ -60,8 +59,18 @@ export class BlocksService {
     return this.isPersonalDataDisplayed$$.asObservable();
   }
 
+  get textRecordsFromJson$() {
+    return this.textRecordsFromJson$$
+      .asObservable()
+      .pipe(filter((textRecordsFromJson) => textRecordsFromJson !== null));
+  }
+
   get outputTexts$() {
     return this.outputText$$.asObservable();
+  }
+
+  get resetRadioButtons$() {
+    return this.resetRadioButtons$$.asObservable();
   }
 
   emitOptionSelected(option: Option): void {
@@ -85,35 +94,41 @@ export class BlocksService {
   }
 
   resetSettingsToDefault(): void {
+    this.setAllTextsFromJsonAsNotDisplayed();
     this.isPersonalDataDisplayed$$.next(false);
     this.outputText$$.next([loremIpsumText]);
+    this.resetRadioButtons$$.next();
   }
 
   private setupAppendTextStream$() {
     return this.appendButtonClicked$.pipe(
-      mergeMap(() =>
+      switchMap(() =>
         forkJoin([
           this.optionSelected$.pipe(first()),
           this.textRecordsFromJson$.pipe(first()),
         ])
       ),
-      tap(([optionSelected, stringsFromJson]) =>
-        this.generateAppendedOutputText(optionSelected, stringsFromJson)
-      )
+      tap(([optionSelected, textRecordsFromJson]) => {
+        if (textRecordsFromJson) {
+          this.generateAppendedOutputText(optionSelected, textRecordsFromJson);
+        }
+      })
     );
   }
 
   private setupReplaceTextStream$() {
     return this.replaceButtonClicked$.pipe(
-      mergeMap(() =>
+      switchMap(() =>
         forkJoin([
           this.optionSelected$.pipe(first()),
           this.textRecordsFromJson$.pipe(first()),
         ])
       ),
-      tap(([optionSelected, stringsFromJson]) =>
-        this.generateReplacementText(optionSelected, stringsFromJson)
-      )
+      tap(([optionSelected, textRecordsFromJson]) => {
+        if (textRecordsFromJson) {
+          this.generateReplacementText(optionSelected, textRecordsFromJson);
+        }
+      })
     );
   }
 
@@ -244,7 +259,7 @@ export class BlocksService {
       text = textRecordsFromJson[index].value;
 
       textRecordsFromJson[index].isDisplayed = true;
-      this.textRecordsFromJson$.next(textRecordsFromJson);
+      this.textRecordsFromJson$$.next(textRecordsFromJson);
     }
 
     return text;
@@ -264,7 +279,7 @@ export class BlocksService {
     }));
     textRecordsFromJson[index].isDisplayed = true;
 
-    this.textRecordsFromJson$.next(textRecordsFromJson);
+    this.textRecordsFromJson$$.next(textRecordsFromJson);
 
     return text;
   }
@@ -275,10 +290,19 @@ export class BlocksService {
       .pipe(
         map((data) => data['data']),
         tap((stringsFromJson) => {
-          this.textRecordsFromJson$.next(stringsFromJson);
+          this.textRecordsFromJson$$.next(stringsFromJson);
         })
-        // takeUntilDestroyed()
       );
+  }
+
+  private setAllTextsFromJsonAsNotDisplayed(): void {
+    if (this.textRecordsFromJson$$.value) {
+      const modifiedTextRecordsFromJson = this.textRecordsFromJson$$.value.map(
+        (textRecords) => ({ ...textRecords, isDisplayed: false })
+      );
+
+      this.textRecordsFromJson$$.next(modifiedTextRecordsFromJson);
+    }
   }
 
   private generateRandomIndexFromRange(): number {

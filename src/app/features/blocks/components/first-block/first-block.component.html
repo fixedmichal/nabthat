@@ -1,11 +1,11 @@
 <section class="first-block">
-  <h3 class="uppercase-header">blok pierwszy</h3>
+  <h2 class="uppercase-header">blok pierwszy</h2>
   <fieldset
     class="first-block__radio-buttons"
     role="radiogroup"
     aria-labelledby="first-block-label"
   >
-    @for(radioButton of radioButtons; track radioButton.id) {
+    @for(radioButton of radioButtonsConfig; track radioButton.id) {
     <label class="first-block__radio-buttons__label" [for]="radioButton.id">
       <input
         [formControl]="options"

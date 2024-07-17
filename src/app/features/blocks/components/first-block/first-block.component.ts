@@ -1,13 +1,16 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   inject,
   OnInit,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { tap } from 'rxjs';
-import { Option } from '../../../models/option.type';
-import { BlocksService } from '../../../core/services/blocks.service';
+import { Option } from '../../../../models/option.type';
+import { BlocksService } from '../../../../core/services/blocks.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
 @Component({
   selector: 'app-first-block',
   standalone: true,
@@ -17,14 +20,15 @@ import { BlocksService } from '../../../core/services/blocks.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FirstBlockComponent implements OnInit {
-  private readonly someService = inject(BlocksService);
+  private readonly blocksService = inject(BlocksService);
+  private readonly destroyRef = inject(DestroyRef);
 
   protected options = new FormControl<Option>({
     value: null,
     disabled: false,
   });
 
-  protected radioButtons = [
+  protected radioButtonsConfig = [
     {
       id: 'firstOptionRadioButton',
       value: 'firstOption',
@@ -42,22 +46,18 @@ export class FirstBlockComponent implements OnInit {
     },
   ];
 
-  constructor() {
-    // this.someService
-    //   .stream$()
-    //   .pipe(
-    //     tap((data) => console.log('stream: ', data)),
-    //     takeUntilDestroyed()
-    //   )
-    //   .subscribe();
-  }
-
   ngOnInit(): void {
     this.options.valueChanges
       .pipe(
-        tap((option) => {
-          this.someService.emitOptionSelected(option);
-        })
+        tap((option) => this.blocksService.emitOptionSelected(option)),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe();
+
+    this.blocksService.resetRadioButtons$
+      .pipe(
+        tap(() => this.options.reset()),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
   }

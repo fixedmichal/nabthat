@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { BlocksService } from '../services/blocks.service';
+import { BlocksService } from '../../services/blocks.service';
 import { AsyncPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 @Component({
@@ -12,6 +12,6 @@ import { RouterLink } from '@angular/router';
 })
 export class HeaderComponent {
   private readonly blocksService = inject(BlocksService);
-  protected isAuthorNameDisplayed$ =
+  protected isPersonalDataDisplayed$ =
     this.blocksService.isPersonalDataDisplayed$;
 }
